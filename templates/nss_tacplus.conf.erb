@@ -1,0 +1,9 @@
+#
+# This file is managed by Puppet.
+# Any changes will likely be overwritten
+#
+server <%= @server.map{ |srv| "#{srv}" }.join(',') %>
+secret	<%= @secret %>
+timeout <%= @timeout %>
+service <%= @service %>
+protocol ssh
