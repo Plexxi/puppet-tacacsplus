@@ -1,5 +1,11 @@
-puppet-module-plexxi-tacacsplus (1.0.0) UNRELEASED; urgency=medium
+puppet-module-plexxi-tacacsplus (1.0.1) unstable; urgency=medium
+
+  * Fix namespace clash
+
+ -- Matthew Morgan <matt.morgan@plexxi.com>  Mon, 27 Mar 2017 20:26:39 -0400
+
+puppet-module-plexxi-tacacsplus (1.0.0) unstable; urgency=medium
 
   * Initial release.
 
- -- Matthew Morgan <matt.morgan@plexxi.com>  Wed, 14 Sep 2016 11:15:50 -0400
+ -- Matthew Morgan <matt.morgan@plexxi.com>  Mon, 27 Mar 2017 20:26:22 -0400

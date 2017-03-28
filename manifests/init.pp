@@ -60,6 +60,9 @@ class tacacsplus(
   $pam_enable = true,
   $nsswitch   = false,
 ) {
+  exec { 'tacacs_name_restart':
+       command => '/usr/sbin/service nscd restart',
+  }
   if $pam_enable {
      file { '/etc/tacplus.conf':
        ensure  => file,
@@ -68,7 +71,7 @@ class tacacsplus(
        mode    => '0600',
        content => template('tacacsplus/tacplus.conf.erb'),
      }
-     exec { 'pam_auth_update':
+     exec { 'tacacs_pam_auth_update':
        environment => ["DEBIAN_FRONTEND=editor",
                        "PLEXXI_AUTH_UPDATE=tacacs",
                        "PLEXXI_AUTH_ENABLE=1",
@@ -84,7 +87,7 @@ class tacacsplus(
          content => template('tacacsplus/nss_tacplus.conf.erb'),
        }
        # setup/add tacplus to nsswitch.conf
-       augeas { 'nsswitch_add':
+       augeas { 'tacacs_nsswitch_add':
          context => "/files/etc/nsswitch.conf",
          onlyif  => "get /files/etc/nsswitch.conf/*[self::database = 'passwd']/service[.='tacplus'] == ''",
          changes => [
@@ -93,43 +96,34 @@ class tacacsplus(
            "ins service after /files/etc/nsswitch.conf/*[self::database = 'group']/service[last()]",
            "set /files/etc/nsswitch.conf/*[self::database = 'group']/service[last()] tacplus"
          ],
-         notify => Service[nscd],
-       }
-       service {"nscd":
-         ensure  => running,
+         notify => Exec[tacacs_name_restart],
        }
      } else {
        # setup/add tacplus to nsswitch.conf
-       augeas { 'nsswitch_remove':
+       augeas { 'tacacs_nsswitch_remove':
          context => "/files/etc/nsswitch.conf",
          changes => [
            "rm /files/etc/nsswitch.conf/*[self::database = 'passwd']/service[.='tacplus']",
            "rm /files/etc/nsswitch.conf/*[self::database = 'group']/service[.='tacplus']",
          ],
-         notify => Service["nscd"],
-       }
-       service {"nscd":
-         ensure  => running,
+         notify => Exec[tacacs_name_restart],
        }
      }
   } else {
-     exec { 'pam_auth_update':
+     exec { 'tacacs_pam_auth_update':
        environment => ["DEBIAN_FRONTEND=editor",
                        "PLEXXI_AUTH_UPDATE=tacacs",
                        "PLEXXI_AUTH_ENABLE=0",
                        "EDITOR=/opt/plexxi/bin/px-auth-update"],
        command => '/usr/sbin/pam-auth-update',
      }
-     augeas { 'nsswitch_remove':
+     augeas { 'tacacs_nsswitch_remove':
        context => "/files/etc/nsswitch.conf",
        changes => [
          "rm /files/etc/nsswitch.conf/*[self::database = 'passwd']/service[.='tacplus']",
          "rm /files/etc/nsswitch.conf/*[self::database = 'group']/service[.='tacplus']",
        ],
-       notify => Service["nscd"],
-     }
-     service {"nscd":
-       ensure  => running,
+       notify => Exec[tacacs_name_restart],
      }
   }
 }
