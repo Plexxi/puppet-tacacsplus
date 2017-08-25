@@ -7,11 +7,8 @@
 # Document parameters here.
 #
 # [server]
-#   Address of TACACS+ servers.  Multiple entries may be set.
-#   **Required**
-# [secret]
-#   Secret used for the TACACS+ server
-#   **Required**
+#   Array of structures { addr, secret} of TACACS+ servers
+#   *Optional*
 # [timeout]
 #   Defaults to 2 seconds
 #   *Optional*
@@ -38,8 +35,12 @@
 # === Examples
 #
 #  class { 'tacacsplus':
-#    server => [ '1.2.3.4', 'my.tacacs.com' ],
-#    secret => 'mySecret',
+#    server => [ { addr => '1.2.3.4',
+#                  secret => "secret1"
+#                }
+#                { addr => 'my.tacacs.com',
+#                  secret => "secret2"
+#                } ]
 #  }
 #
 # === Authors
@@ -50,9 +51,11 @@
 #
 # Copyright 2016 Matthew Morgan, Plexxi, Inc
 #
+
+
+
 class tacacsplus( 
-  $server,
-  $secret,
+  $server     = [],
   $timeout    = 2,
   $login      = 'login',
   $service    = 'linuxlogin',

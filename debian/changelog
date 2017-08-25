@@ -1,3 +1,9 @@
+puppet-module-plexxi-tacacsplus (1.0.2) unstable; urgency=medium
+
+  * Change server/secret structure 
+
+ -- Matthew Morgan <matt.morgan@plexxi.com>  Fri, 25 Aug 2017 11:16:42 -0400
+
 puppet-module-plexxi-tacacsplus (1.0.1) unstable; urgency=medium
 
   * Fix namespace clash
