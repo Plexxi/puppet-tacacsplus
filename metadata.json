@@ -1,6 +1,6 @@
 {
   "name": "plexxi-tacacsplus",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "plexxi",
   "summary": "Configure the TACACS+ PAM module.",
   "license": "Apache 2.0",
