@@ -1,3 +1,9 @@
+puppet-module-plexxi-tacacsplus (1.0.4) unstable; urgency=medium
+
+  * another NSS template fix 
+
+ -- Matthew Morgan <matt.morgan@plexxi.com>  Fri, 08 Sep 2017 11:36:36 -0400
+
 puppet-module-plexxi-tacacsplus (1.0.3) unstable; urgency=medium
 
   * Fix NSS template 

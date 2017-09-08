@@ -5,8 +5,8 @@
 
 <% if @server -%>
 <% Array(@server).each do |serv| -%>
-server=<%= serv['addr'] %>
-secret=<%= serv['secret'] %>
+server <%= serv['addr'] %>
+secret <%= serv['secret'] %>
 <% end -%>
 <%end -%>
 timeout <%= @timeout %>
