@@ -63,6 +63,10 @@ class tacacsplus(
   $pam_enable = true,
   $nsswitch   = false,
 ) {
+
+  validate_bool($pam_enable)
+  validate_bool($nsswitch)
+  
   exec { 'tacacs_name_restart':
        command => '/usr/sbin/service nscd restart',
   }

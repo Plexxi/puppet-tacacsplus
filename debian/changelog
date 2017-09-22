@@ -1,3 +1,9 @@
+puppet-module-plexxi-tacacsplus (1.0.5) unstable; urgency=medium
+
+  * add validation of boolean parameters 
+
+ -- Matthew Morgan <matt.morgan@plexxi.com>  Fri, 22 Sep 2017 10:54:26 -0400
+
 puppet-module-plexxi-tacacsplus (1.0.4) unstable; urgency=medium
 
   * another NSS template fix 
