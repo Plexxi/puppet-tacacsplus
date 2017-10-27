@@ -98,15 +98,15 @@ class tacacsplus(
          context => "/files/etc/nsswitch.conf",
          onlyif  => "get /files/etc/nsswitch.conf/*[self::database = 'passwd']/service[.='tacplus'] == ''",
          changes => [
-           "ins service after /files/etc/nsswitch.conf/*[self::database = 'passwd']/service[last()]",
-           "set /files/etc/nsswitch.conf/*[self::database = 'passwd']/service[last()] tacplus",
-           "ins service after /files/etc/nsswitch.conf/*[self::database = 'group']/service[last()]",
-           "set /files/etc/nsswitch.conf/*[self::database = 'group']/service[last()] tacplus"
+           "ins service before /files/etc/nsswitch.conf/*[self::database = 'passwd']/service[1]",
+           "set /files/etc/nsswitch.conf/*[self::database = 'passwd']/service[1] tacplus",
+           "ins service before /files/etc/nsswitch.conf/*[self::database = 'group']/service[1]",
+           "set /files/etc/nsswitch.conf/*[self::database = 'group']/service[1] tacplus"
          ],
          notify => Exec[tacacs_name_restart],
        }
      } else {
-       # setup/add tacplus to nsswitch.conf
+       # remove tacplus from nsswitch.conf
        augeas { 'tacacs_nsswitch_remove':
          context => "/files/etc/nsswitch.conf",
          changes => [
