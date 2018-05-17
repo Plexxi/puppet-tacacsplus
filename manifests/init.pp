@@ -55,18 +55,17 @@
 
 
 class tacacsplus( 
-  $server     = [],
-  $timeout    = 2,
-  $login      = 'login',
-  $service    = 'linuxlogin',
-  $protocol   = 'ssh',
-  $pam_enable = true,
-  $nsswitch   = false,
+  Optional[Array[Struct[{ addr => String,
+                          secret => String
+                        }]]] $server = [],
+  Optional[Integer]          $timeout    = 2,
+  Optional[String]           $login      = 'login',
+  Optional[String]           $service    = 'linuxlogin',
+  Optional[String]           $protocol   = 'ssh',
+  Optional[Boolean]          $pam_enable = true,
+  Optional[Boolean]          $nsswitch   = false,
 ) {
 
-  validate_bool($pam_enable)
-  validate_bool($nsswitch)
-  
   exec { 'tacacs_name_restart':
        command => '/usr/sbin/service nscd restart',
   }
